@@ -1,0 +1,7 @@
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-l
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^get$ /api/get.php
+RewriteRule ^check/(.*)/(.*)/?$ /api/check.php?ill=$1&drug=$2
