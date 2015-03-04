@@ -24,44 +24,100 @@
         };
 }() );
 
+( function ( $ ) {
+
+    $.fn.randomize = function ( childElem ) {
+        return this.each( function () {
+            var $this = $( this );
+            var elems = $this.children( childElem );
+
+            elems.sort( function () {
+                return ( Math.round( Math.random() ) - 0.5 );
+            } );
+
+            $this.detach( childElem );
+
+            for ( var i = 0; i < elems.length; i++ )
+                $this.append( elems[ i ] );
+
+        } );
+    }
+
+} )( jQuery );
+
 ( function () {
 
     var billa,
         billaImage,
         canvas,
-        malattia,
+        ill,
         life = 3,
-        level = 1;
+        level = 1,
+        msg = {
+            winner: "COMPLIMENTI<br>HAI VINTO!!!",
+            level: "<br>LIVELLO<br><br>",
+            drug: "<br>Proprio quello<br>che ci voleva<br><br>",
+            seek: "<br>AHI, AHI !!!<br>Oggi non sto bene ragazzi...",
+            error: "OH NO!!!<br><br>Stai tentando<br>di uccidermi?",
+            intro: "Ciao!<br>Mi chiamo Brambilla<br>e sono un po' sfortunato...<br>potresti aiutarmi?",
+            credit: "Davide Pedone<br>Claudio Pennati<br><br>Special Guest<br>Riccardo Brambilla",
+            lose: "OH NO!!!<br>Addio mondo crudele!"
+        };
 
-    function getMalattia( cb ) {
-        cb();
-        /*$.getJSON( '/api/malattia', function ( resp ) {
-            malattia = resp;
-            cb();
-        } );*/
-    }
-
-    function setMedicina( medicina, cb ) {
-        /*$.getJSON( '/api/malattia/' malattia ' + '/' + medicina, function ( resp ) {
-            malattia = resp;
-            cb();
-        } );*/
-        cb( {
-            result: false
+    function getIll( cb ) {
+        $.getJSON( '/api/get', function ( resp ) {
+            ill = resp.id;
+            showText( false, function () {
+                showText( resp.desc, 4000, cb );
+            } );
         } );
-    }
-
-    function mostraFumetto( text, cb ) {
-        text = text || "AHI, AHI !!!<br>Oggi non mi sento bene ..."
-        $( '#overlay' ).css( 'display', 'block' );
-        $( '#fumetto' ).html( text );
-        $( '#fumetto' ).fadeIn( 500, cb )
     };
 
-    function nascondiFumetto() {
-        $( '#fumetto' ).fadeOut( 500, function () {
+    function checkDrug( drug ) {
+        $.getJSON( '/api/check/' + ill + '/' + drug, function ( resp ) {
+            if ( resp.result ) {
+                billa.animation = true;
+                $( '#overlay' ).css( {
+                    'display': 'block',
+                    'background': 'transparent'
+                } );
+                showText( msg.drug + resp.result, 2000, false );
+                level += 1;
+                setTimeout( reset, 5000 );
+            } else {
+                life -= 1;
+                $( '#life ul li:eq(' + ( 2 - life ) + ')' ).addClass( 'lost' );
+                if ( !life ) {
+                    billaImage.src = "/static/images/brambilla/brambilla-death-sprite.png";
+                    billa.death = true;
+                    billa.animation = true;
+                    $( '#overlay' ).css( {
+                        'display': 'block',
+                        'background': 'transparent'
+                    } );
+                    showText( msg.lose, 5000, function () {
+                        location.reload();
+                    } );
+                } else {
+                    mostraToxic();
+                    showText( msg.error );
+                }
+            }
+        } )
+    };
+
+    function showText( text, delay, cb ) {
+        text = text || msg.seek;
+        if ( !cb ) {
+            cb = delay;
+            delay = 2000;
+        }
+        $( '#overlay' ).css( 'display', 'block' );
+        $( '#text' ).html( text );
+        $( '#text' ).fadeIn( 500 ).delay( delay ).fadeOut( 500, function () {
             $( '#overlay' ).css( 'display', 'none' );
             $( this ).html( '' );
+            if ( $.isFunction( cb ) ) cb();
         } );
     };
 
@@ -72,25 +128,17 @@
     function reset() {
         if ( level == 4 ) {
             $( '#life ul li' ).removeClass( 'lost' );
-            mostraFumetto( 'COMPLIMENTI<br>HAI VINTO!!!', function () {
-                setTimeout( function () {
+            showText( msg.winner, 5000, function () {
+                showText( msg.credit, 5000, function () {
                     location.reload();
-                }, 5000 );
+                } );
             } );
         } else {
             billa.animation = false;
-            mostraFumetto( 'LIVELLO ' + level, function () {
-                setTimeout( function () {
-                    getMalattia( function ( data ) {
-                        mostraFumetto( false, function () {
-                            setTimeout( function () {
-                                mostraFumetto( 'testo malattia', function () {
-                                    setTimeout( nascondiFumetto, 3000 );
-                                } );
-                            }, 3000 );
-                        } );
-                    } );
-                }, 2000 );
+            $( '#overlay' ).removeAttr( 'style' );
+            $( "#drugs" ).randomize( ".drug" );
+            showText( msg.level + level, 2000, function () {
+                getIll();
             } );
         }
     }
@@ -117,6 +165,7 @@
         that.height = options.height;
         that.image = options.image;
         that.animation = options.animation;
+        that.death = options.death;
 
         that.update = function () {
 
@@ -131,11 +180,17 @@
                         // Go to the next frame
                         frameIndex += 1;
                     } else {
-                        frameIndex = 0;
+                        if ( that.death ) {
+                            that.animation = false;
+                        } else {
+                            frameIndex = 0;
+                        }
                     }
                 }
             } else {
-                frameIndex = 0;
+                if ( !that.death ) {
+                    frameIndex = 0;
+                }
             }
         };
 
@@ -176,11 +231,13 @@
         image: billaImage,
         numberOfFrames: 22,
         ticksPerFrame: 8,
-        animation: false
+        animation: false,
+        death: false
     } );
 
-    $( ".medicina" ).on( 'dragstart', function ( e ) {
-        e.originalEvent.dataTransfer.setData( "medicina", e.target.id );
+    $( document ).on( 'dragstart', ".drug", function ( e ) {
+        var id = $( e.target ).parent().attr( 'id' );
+        e.originalEvent.dataTransfer.setData( "drug", id );
     } );
 
     $( "#brambillaCanvas" ).on( 'dragover', function ( e ) {
@@ -189,40 +246,16 @@
 
     $( "#brambillaCanvas" ).on( 'drop', function ( e ) {
         e.preventDefault();
-        var medicina = e.originalEvent.dataTransfer.getData( "medicina" );
+        var drug = e.originalEvent.dataTransfer.getData( "drug" );
         // visualizza punto di domanda in grafica
-        setMedicina( medicina, function ( response ) {
-            // rimuovi punto di domanda
-            if ( response.result ) {
-                billa.animation = true;
-                level += 1;
-                setTimeout( reset, 5000 );
-            } else {
-                life -= 1;
-                $( '#life ul li:eq(' + ( 2 - life ) + ')' ).addClass( 'lost' );
-                if ( !life ) {
-                    // uccidi billa e messaggio ricomincia
-                } else {
-                    mostraToxic();
-                    mostraFumetto( 'OH NO!!!<br>Stai tentando<br>di uccidermi?', function () {
-                        setTimeout( nascondiFumetto, 2500 );
-                    } );
-                }
-            }
-        } )
+        checkDrug( drug );
     } );
 
-    getMalattia( function ( data ) {
-        // Load sprite sheet
-        billaImage.addEventListener( "load", gameLoop );
-        billaImage.src = "/static/images/brambilla-sprite.png";
-        mostraFumetto( "Ciao!<br>Mi chiamo Brambilla<br>e sono un po' sfortunato...<br>potresti aiutarmi?", function () {
-            setTimeout( function () {
-                mostraFumetto( 'testo malattia', function () {
-                    setTimeout( nascondiFumetto, 3000 );
-                } );
-            }, 3000 );
-        } );
+    billaImage.addEventListener( "load", gameLoop );
+    billaImage.src = "/static/images/brambilla/brambilla-sprite.png";
+
+    showText( msg.intro, function () {
+        getIll();
     } );
 
 }() );

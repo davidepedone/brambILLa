@@ -38,7 +38,7 @@ class PlayController{
 
 		if( $this->ill->getList()[ $id ]['drug']['id'] == $drug ){
 
-			$result['result'] = true;
+			$result['result'] = $this->ill->getList()[ $id ]['drug']['name'];
 		}
 		
 		return $result;
