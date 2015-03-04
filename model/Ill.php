@@ -69,7 +69,7 @@ class Ill{
 		 ),
 		 'int' => array(
 		 	'name' => 'intestino',
-		 	'desc' => 'sai che sono stato male settimana scorsa...<br>si vede che ho l\'intestino irritato',
+		 	'desc' => 'sai che sono stato male<br>settimana scorsa...<br>si vede che ho l\'intestino<br>irritato',
 		 	'drug' => array(
 		 		'id' => 'enterogermina',
 		 		'name' => 'enterogermina',
