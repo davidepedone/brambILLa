@@ -54,7 +54,7 @@
         life = 3,
         level = 1,
         msg = {
-            winner: "COMPLIMENTI<br>HAI VINTO!!!",
+            winner: "COMPLIMENTI<br>HAI VINTO!!!<br><br>grazie per avermi<br>salvato la vita",
             level: "<br>LIVELLO<br><br>",
             drug: "<br>Proprio quello<br>che ci voleva<br><br>",
             seek: "<br>AHI, AHI !!!<br>Oggi non sto bene ragazzi...",
