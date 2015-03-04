@@ -44,11 +44,27 @@ class Ill{
 		 	)
 		 ),
 		 'mdg' => array(
-		 	'name' => 'mal di gupnp_root_device_get_relative_location(root_device)',
+		 	'name' => 'mal di gola',
 		 	'desc' => 'ho un mal di gola fortissimo<br>va beh ... sigaretta ?',
 		 	'drug' => array(
 		 		'id' => 'tach1000',
 		 		'name' => 'tachipirina 1000',
+		 	)
+		 ),
+		 'mdb' => array(
+		 	'name' => 'mal di gambe',
+		 	'desc' => 'ho un mal di gambe<br>ho camminato 5 km<br>mi sembra di aver fatto<br>la maratona',
+		 	'drug' => array(
+		 		'id' => 'muscoril',
+		 		'name' => 'muscoril',
+		 	)
+		 ),
+		 'mds' => array(
+		 	'name' => 'mal di gambe',
+		 	'desc' => 'ho un mal di schiena<br>stanotte mi ha investito<br>un camion mentre dormivo',
+		 	'drug' => array(
+		 		'id' => 'poltrona',
+		 		'name' => 'poltrona da ufficio',
 		 	)
 		 )
 		 /*

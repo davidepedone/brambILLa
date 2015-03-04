@@ -126,7 +126,7 @@
     };
 
     function reset() {
-        if ( level == 4 ) {
+        if ( level == 9 ) {
             $( '#life ul li' ).removeClass( 'lost' );
             showText( msg.winner, 5000, function () {
                 showText( msg.credit, 5000, function () {
