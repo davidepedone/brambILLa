@@ -66,15 +66,41 @@ class Ill{
 		 		'id' => 'poltrona',
 		 		'name' => 'poltrona da ufficio',
 		 	)
-		 )
+		 ),
+		 'int' => array(
+		 	'name' => 'intestino',
+		 	'desc' => 'sai che sono stato male settimana scorsa...<br>si vede che ho l\'intestino irritato',
+		 	'drug' => array(
+		 		'id' => 'enterogermina',
+		 		'name' => 'enterogermina',
+		 	)
+		 ),
+		 'deb' => array(
+		 	'name' => 'debolezza',
+		 	'desc' => 'mi sento debole<br>sarà carenza di sali minerali...',
+		 	'drug' => array(
+		 		'id' => 'polase',
+		 		'name' => 'polase',
+		 	)
+		 ),
+		 'gas' => array(
+		 	'name' => 'bruciori di stomaco',
+		 	'desc' => 'ho un\'acidità di stomaco<br>pazzesca...va là, fumo<br>poi vado in mensa<br>a mangiare la peperonata',
+		 	'drug' => array(
+		 		'id' => 'riopan',
+		 		'name' => 'riopan',
+		 	)
+		 ),
 		 /*
-		'mal di testa' => 'tachipirina 500',
-		'febbre' => 'tachipirina 1000',
-		'nausea' => 'plasil',
-		'aaaa' => 'bbbb',
-		'cccc' => 'dddd',
-		'eeee' => 'ffff'
-		*/
+		 'oki' => array(
+		 	'name' => '',
+		 	'desc' => 'oki',
+		 	'drug' => array(
+		 		'id' => 'oki',
+		 		'name' => 'oki',
+		 	)
+		 ),
+		 */
 	);
 
 	public function getList(){
