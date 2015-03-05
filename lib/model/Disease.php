@@ -107,6 +107,14 @@ class Disease{
 		 		'name' => 'defibrillatore',
 		 	)
 		 ),
+		 'all' => array(
+		 	'name' => 'allergia',
+		 	'desc' => 'forse sto morendo...<br>continuo a starnutire,<br>se non mi passa magari<br>domani sto a casa',
+		 	'drug' => array(
+		 		'id' => 'aerius',
+		 		'name' => 'aerius',
+		 	)
+		 ),
 	);
 
 	public function getList(){
