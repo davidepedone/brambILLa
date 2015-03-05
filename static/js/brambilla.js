@@ -68,7 +68,7 @@
             ill = resp.id;
             var cookie = $.cookie( 'brambILLa' );
             var value = cookie ? cookie + '|' + ill : ill;
-            $.cookie( 'brambILLa', value );
+            $.cookie( 'brambILLa', value, { path: '/' } );
             showText( false, function () {
                 showText( resp.desc, 4000, cb );
             } );
