@@ -129,7 +129,7 @@
     };
 
     function reset() {
-        if ( level == 13 ) {
+        if ( level == 14 ) {
             $( '#life ul li' ).removeClass( 'lost' );
             $.removeCookie('brambILLa');
             showText( msg.winner, 5000, function () {
