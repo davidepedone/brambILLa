@@ -183,3 +183,8 @@ body #brambilla #drugs .drug:nth-child(13) {
     right: 100px;
     left: auto;
 }
+body #brambilla #drugs .drug:nth-child(14) {
+    bottom: 0px;
+    right: 5px;
+    left: auto;
+}

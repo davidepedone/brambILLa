@@ -52,6 +52,7 @@
         ill,
         life = 3,
         level = 1,
+        maxLevel = ($('.drug').length + 1);
         msg = {
             winner: "COMPLIMENTI<br>HAI VINTO!!!<br><br>grazie per avermi<br>salvato la vita",
             doc: "BRAMBILLA<br>tu non hai un cazzo!!<br>sei malato nella testa!!",
@@ -142,7 +143,7 @@
     };
 
     function reset() {
-        if ( level == 14 ) {
+        if ( level == maxLevel ) {
             $( '#life ul li' ).removeClass( 'lost' );
             $.removeCookie( 'brambilla' );
             showText( msg.winner, 5000, function () {
