@@ -4,15 +4,31 @@ body {
     margin: 0px;
     padding: 0px;
 }
+
+body .leadearboard {
+    margin: 0px auto 10px auto;
+    width: 728px;
+    height: 90px;
+}
 body > h1 {
     margin: 20px auto;
     text-align: center;
     text-transform: uppercase;
 }
-body #brambilla {
-    width: 768px;
-    height: auto;
+
+body #container {
     margin: 20px auto;
+    width: 1028px;
+}
+body .videobanner {
+    float:right;
+    margin-left: 20px;
+    width:300px;
+}
+body #brambilla {
+    float: left;
+    width: 708px;
+    height: auto;
     text-align: center;
     position: relative;
 }
