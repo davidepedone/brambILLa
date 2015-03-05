@@ -150,3 +150,8 @@ body #brambilla #drugs .drug:nth-child(12) {
     bottom: 170px;
     left: 20px;
 }
+body #brambilla #drugs .drug:nth-child(13) {
+    bottom: 160px;
+    right: 140px;
+    left: auto;
+}

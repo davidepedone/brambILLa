@@ -91,16 +91,22 @@ class Ill{
 		 		'name' => 'riopan',
 		 	)
 		 ),
-		 /*
-		 'oki' => array(
-		 	'name' => '',
-		 	'desc' => 'oki',
+		 'mdc' => array(
+		 	'name' => 'mal di collo',
+		 	'desc' => 'mi fa male il collo<br>non riesco a girare<br>la testa',
 		 	'drug' => array(
 		 		'id' => 'oki',
 		 		'name' => 'oki',
 		 	)
 		 ),
-		 */
+		 'ptb' => array(
+		 	'name' => 'pettorale ballerino',
+		 	'desc' => 'ho preso la scossa<br>mi pulsa il pettorale da<br>2 giorni<br>sembro un culturista',
+		 	'drug' => array(
+		 		'id' => 'defibrillatore',
+		 		'name' => 'defibrillatore',
+		 	)
+		 ),
 	);
 
 	public function getList(){

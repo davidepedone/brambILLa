@@ -45,8 +45,7 @@
 
 } )( jQuery );
 
-( function () {
-
+( function ( $ ) {
     var billa,
         billaImage,
         canvas,
@@ -67,6 +66,9 @@
     function getIll( cb ) {
         $.getJSON( '/api/get', function ( resp ) {
             ill = resp.id;
+            var cookie = $.cookie( 'brambILLa' );
+            var value = cookie ? cookie + '|' + ill : ill;
+            $.cookie( 'brambILLa', value );
             showText( false, function () {
                 showText( resp.desc, 4000, cb );
             } );
@@ -88,6 +90,7 @@
                 life -= 1;
                 $( '#life ul li:eq(' + ( 2 - life ) + ')' ).addClass( 'lost' );
                 if ( !life ) {
+                    $.removeCookie('brambILLa');
                     billaImage.src = "/static/images/brambilla/brambilla-death-sprite.png";
                     billa.death = true;
                     billa.animation = true;
@@ -126,8 +129,9 @@
     };
 
     function reset() {
-        if ( level == 9 ) {
+        if ( level == 13 ) {
             $( '#life ul li' ).removeClass( 'lost' );
+            $.removeCookie('brambILLa');
             showText( msg.winner, 5000, function () {
                 showText( msg.credit, 5000, function () {
                     location.reload();
@@ -258,4 +262,4 @@
         getIll();
     } );
 
-}() );
+} )( jQuery );
