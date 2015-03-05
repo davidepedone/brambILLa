@@ -1,6 +1,6 @@
 <?php
 
-class Ill{
+class Disease{
 
 	private $list = array(
 		 'mdt' => array(

@@ -1,6 +1,7 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT']."/controller/PlayController.php");
+$homedir = substr( $_SERVER['SCRIPT_FILENAME'],0,-strlen($_SERVER['SCRIPT_NAME']) ).'/';
+require_once($homedir."lib/controller/PlayController.php");
 
 class PlayView{
 
