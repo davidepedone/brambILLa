@@ -54,6 +54,7 @@
         level = 1,
         msg = {
             winner: "COMPLIMENTI<br>HAI VINTO!!!<br><br>grazie per avermi<br>salvato la vita",
+            doc: "BRAMBILLA<br>tu non hai un cazzo!!<br>sei malato nella testa!!",
             level: "<br>LIVELLO<br><br>",
             drug: "<br>Proprio quello<br>che ci voleva<br><br>",
             seek: "<br>AHI, AHI !!!<br>Oggi non sto bene ragazzi...",
@@ -66,9 +67,11 @@
     function getIll( cb ) {
         $.getJSON( '/api/get', function ( resp ) {
             ill = resp.id;
-            var cookie = $.cookie( 'brambILLa' );
+            var cookie = $.cookie( 'brambilla' );
             var value = cookie ? cookie + '|' + ill : ill;
-            $.cookie( 'brambILLa', value, { path: '/' } );
+            $.cookie( 'brambilla', value, {
+                path: '/'
+            } );
             showText( false, function () {
                 showText( resp.desc, 4000, cb );
             } );
@@ -90,7 +93,7 @@
                 life -= 1;
                 $( '#life ul li:eq(' + ( 2 - life ) + ')' ).addClass( 'lost' );
                 if ( !life ) {
-                    $.removeCookie('brambILLa');
+                    $.removeCookie( 'brambilla' );
                     billaImage.src = "/static/images/brambilla/brambilla-death-sprite.png";
                     billa.death = true;
                     billa.animation = true;
@@ -107,6 +110,16 @@
                 }
             }
         } )
+    };
+
+    function showDoctorText( cb ) {
+        $( '#overlay' ).css( 'display', 'block' );
+        $( '#textDoc' ).html( msg.doc );
+        $( '#textDoc' ).fadeIn( 500 ).delay( 3000 ).fadeOut( 500, function () {
+            $( '#overlay' ).css( 'display', 'none' );
+            $( this ).html( '' );
+            if ( $.isFunction( cb ) ) cb();
+        } );
     };
 
     function showText( text, delay, cb ) {
@@ -131,7 +144,7 @@
     function reset() {
         if ( level == 14 ) {
             $( '#life ul li' ).removeClass( 'lost' );
-            $.removeCookie('brambILLa');
+            $.removeCookie( 'brambilla' );
             showText( msg.winner, 5000, function () {
                 showText( msg.credit, 5000, function () {
                     location.reload();
@@ -244,6 +257,18 @@
         e.originalEvent.dataTransfer.setData( "drug", id );
     } );
 
+    $( "#doctor" ).click( function ( e ) {
+        e.preventDefault();
+        var doc = $( this )
+        if ( !doc.hasClass( 'disabled' ) ) {
+            showDoctorText( function () {
+                doc.addClass( 'disabled' );
+                level += 1;
+                reset();
+            } );
+        }
+    } );
+
     $( "#brambillaCanvas" ).on( 'dragover', function ( e ) {
         e.preventDefault();
     } );
@@ -257,6 +282,8 @@
 
     billaImage.addEventListener( "load", gameLoop );
     billaImage.src = "/static/images/brambilla/brambilla-sprite.png";
+
+    $.removeCookie( 'brambilla' );
 
     showText( msg.intro, function () {
         getIll();

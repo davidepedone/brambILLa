@@ -28,6 +28,7 @@ body #brambilla #overlay {
     filter: alpha(opacity=20);
 }
 body #brambilla #text {
+    display: none;
     padding-top: 92px;
     position: absolute;
     top: 71px;
@@ -54,8 +55,9 @@ body #brambilla #life {
     right: 10px;
     z-index: 201;
 }
+body #brambilla #jolly h3,
 body #brambilla #life h3 {
-    text-align: left;
+    text-align: right;
     margin: 0px 0px 0px 5px;
     color: #EE0B0B;
 }
@@ -77,6 +79,32 @@ body #brambilla #life ul li.lost {
 }
 body #brambilla #life ul li:first-child {
     margin-left: 0px;
+}
+body #brambilla #jolly {
+    position: absolute;
+    top: 90px;
+    right: 10px;
+    z-index: 201;
+}
+body #brambilla #jolly #doctor img{
+    width:40px;
+    cursor: pointer;
+}
+body #brambilla #jolly #doctor.disabled {
+    opacity: 0.3;
+    filter: alpha(opacity=30);    
+}
+body #brambilla #jolly #textDoc {
+    display: none;
+    position: absolute;
+    top: -100px;
+    right: 50px;
+    z-index: 210;
+    background: url('images/fumettoDoc.png') no-repeat scroll center center transparent;
+    width: 200px;
+    height: 121px;
+    font-size: 13px;
+    padding-top: 40px;
 }
 body #brambilla #drugs .drug {
     width: 64px;
@@ -137,7 +165,7 @@ body #brambilla #drugs .drug:nth-child(9) {
 
 body #brambilla #drugs .drug:nth-child(10) {
     bottom: 175px;
-    right: 50px;
+    right: 205px;
     left: auto;
 }
 
@@ -152,6 +180,6 @@ body #brambilla #drugs .drug:nth-child(12) {
 }
 body #brambilla #drugs .drug:nth-child(13) {
     bottom: 160px;
-    right: 140px;
+    right: 100px;
     left: auto;
 }
