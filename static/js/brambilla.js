@@ -74,7 +74,7 @@
                 path: '/'
             } );
             showText( false, function () {
-                showText( resp.desc, 4000, cb );
+                showText( resp.desc, 6000, cb );
             } );
         } );
     };
