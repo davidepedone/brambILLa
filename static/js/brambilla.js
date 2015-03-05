@@ -277,8 +277,9 @@
     $( "#brambillaCanvas" ).on( 'drop', function ( e ) {
         e.preventDefault();
         var drug = e.originalEvent.dataTransfer.getData( "drug" );
-        // visualizza punto di domanda in grafica
-        checkDrug( drug );
+        if (drug){
+            checkDrug( drug );
+        }
     } );
 
     billaImage.addEventListener( "load", gameLoop );
